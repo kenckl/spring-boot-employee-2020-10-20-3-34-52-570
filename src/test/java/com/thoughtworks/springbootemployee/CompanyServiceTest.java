@@ -30,4 +30,7 @@ public class CompanyServiceTest {
         //given
         assertEquals(2, actualCompany.size());
     }
+    
+
+
 }
