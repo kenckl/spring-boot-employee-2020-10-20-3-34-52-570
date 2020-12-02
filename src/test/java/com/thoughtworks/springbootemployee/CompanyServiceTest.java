@@ -1,7 +1,6 @@
 package com.thoughtworks.springbootemployee;
 
 import com.thoughtworks.springbootemployee.Model.Company;
-import com.thoughtworks.springbootemployee.Model.Employee;
 import com.thoughtworks.springbootemployee.Repository.CompanyRepository;
 import com.thoughtworks.springbootemployee.Service.CompanyService;
 import com.thoughtworks.springbootemployee.Service.EmployeeService;
@@ -12,6 +11,7 @@ import java.util.List;
 
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 import static org.mockito.Mockito.when;
 
 public class CompanyServiceTest {
@@ -30,7 +30,19 @@ public class CompanyServiceTest {
         //given
         assertEquals(2, actualCompany.size());
     }
-    
+
+    @Test
+    public void should_create_company_when_create_given_company() {
+        //given
+        Company company = new Company(1, "ABC Company");
+        when(companyRepository.addCompany(company)).thenReturn(company);
+
+        //when
+        Company actualCompany = companyService.createCompany(company);
+
+        //then
+        assertEquals("ABC Company", actualCompany.getCompanyName());
+    }
 
 
 }
