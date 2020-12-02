@@ -1,13 +1,12 @@
 package com.thoughtworks.springbootemployee.controller;
 
 import com.thoughtworks.springbootemployee.Model.Company;
-import com.thoughtworks.springbootemployee.Model.Employee;
-import com.thoughtworks.springbootemployee.Repository.CompanyRepository;
 import com.thoughtworks.springbootemployee.Service.CompanyService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/companies")
@@ -56,5 +55,13 @@ public class CompaniesController {
                 .filter(company -> company.getCompanyId().equals(companyId))
                 .findFirst()
                 .ifPresent(companies::remove);
+    }
+
+    @GetMapping(params = {"page", "pageSize"})
+    public List<Company> getCompanyByPage(@RequestParam("page") Integer page, @RequestParam("pageSize") Integer pageSize) {
+        return companies.stream()
+                .skip((page - 1) * pageSize)
+                .limit(pageSize)
+                .collect(Collectors.toList());
     }
 }
