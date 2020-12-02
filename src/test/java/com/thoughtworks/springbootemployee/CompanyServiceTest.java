@@ -8,11 +8,11 @@ import com.thoughtworks.springbootemployee.Service.EmployeeService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.util.Collections;
 import java.util.List;
 
 import static java.util.Arrays.asList;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 public class CompanyServiceTest {
@@ -103,5 +103,18 @@ public class CompanyServiceTest {
         assertEquals(5, actualCompany.size());
     }
 
+    @Test
+    void should_return_employee_list_when_search_in_company_given_employee_and_company() {
+        //given
+        Company company = new Company(1, "ABC Company");
+        Employee employee = new Employee(1, "Ken", 18, "Male", 100000);
+        when(companyRepository.getEmployeesByCompanyId(company.getCompanyId())).thenReturn(Collections.singletonList(employee));
+        CompanyService companyService = new CompanyService(companyRepository);
 
+        //when
+        List<Employee> actualEmployee = companyService.getEmployeesByCompanyId(company.getCompanyId());
+
+        //then
+        assertTrue(actualEmployee.contains(employee));
+    }
 }

@@ -53,4 +53,11 @@ public class CompanyRepository {
                 .collect(Collectors.toList());
 
     }
+
+    public List<Employee> getEmployeesByCompanyId(Integer companyId) {
+        EmployeeRepository employeeRepository = new EmployeeRepository();
+        return employeeRepository.findAllEmployees().stream()
+                .filter(employee -> employee.getId() == companyId)
+                .collect(Collectors.toList());
+    }
 }

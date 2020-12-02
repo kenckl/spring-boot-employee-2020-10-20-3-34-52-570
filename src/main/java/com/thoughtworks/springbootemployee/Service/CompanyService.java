@@ -37,4 +37,8 @@ public class CompanyService {
     public List<Company> getCompanyByPage(Integer page, Integer pageSize) {
         return companyRepository.getCompanyByPage(page,pageSize);
     }
+
+    public List<Employee> getEmployeesByCompanyId(Integer companyId) {
+        return companyRepository.getEmployeesByCompanyId(companyId);
+    }
 }
