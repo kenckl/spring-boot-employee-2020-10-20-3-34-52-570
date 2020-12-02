@@ -17,6 +17,10 @@ public class EmployeeService {
     }
 
     public Employee createEmployees(Employee employee){
-        return employeeRepository.add(employee);
+        return employeeRepository.addEmployee(employee);
+    }
+
+    public Employee updateEmployeeById(Integer id, Employee employee){
+        return employeeRepository.updateEmployeeById(id, employee);
     }
 }

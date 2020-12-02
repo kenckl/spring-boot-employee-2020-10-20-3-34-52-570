@@ -13,8 +13,19 @@ public class EmployeeRepository {
         return employees;
     }
     
-    public Employee add(Employee employee){
+    public Employee addEmployee(Employee employee){
         employees.add(employee);
         return employee;
+    }
+
+    public Employee updateEmployeeById(Integer id, Employee newEmployee){
+        employees.stream()
+             .filter(employee -> employee.getId() == id)
+             .findFirst()
+             .ifPresent(employee -> {
+                 employees.remove(employee);
+                 employees.add(newEmployee);
+             });
+        return newEmployee;
     }
 }

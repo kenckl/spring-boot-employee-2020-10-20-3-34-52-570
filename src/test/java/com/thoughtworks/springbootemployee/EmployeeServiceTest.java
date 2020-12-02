@@ -9,8 +9,7 @@ import org.mockito.Mockito;
 import java.util.List;
 
 import static java.util.Arrays.asList;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 public class EmployeeServiceTest {
@@ -36,12 +35,25 @@ public class EmployeeServiceTest {
         //given
         Employee employee = new Employee(1, "Ken", 18, "male", 100000);
         EmployeeService employeeService = new EmployeeService(repository);
-        when(repository.add(employee)).thenReturn(employee);
+        when(repository.addEmployee(employee)).thenReturn(employee);
 
         //when
         Employee actualEmployee = employeeService.createEmployees(employee);
 
         //then
         assertSame(1, actualEmployee.getId());
+    }
+
+    @Test
+    void should_update_employee_when_update_employee_by_id_given_employee_id() {
+        //given
+        Employee employee = new Employee(1, "Ken", 18, "male", 100000);
+        Employee newEmployee = new Employee(1, "Ken", 18, "male", 200000);
+        when(repository.updateEmployeeById(employee.getId(), employee)).thenReturn(newEmployee);
+        EmployeeService employeeService = new EmployeeService(repository);
+        //when
+        Employee actualEmployee = employeeService.updateEmployeeById(employee.getId(), employee);
+        //then
+        assertNotEquals(employee.getSalary(), actualEmployee.getSalary());
     }
 }
