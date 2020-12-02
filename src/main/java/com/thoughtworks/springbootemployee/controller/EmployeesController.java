@@ -30,4 +30,15 @@ public class EmployeesController {
         return employees.stream()
                 .filter(employee -> employee.getId().equals(employeeId)).findFirst().orElse(null);
     }
+
+    @PutMapping("/{employeeId}")
+    public Employee updateEmployeeById(@PathVariable Integer employeeId, @RequestBody Employee employeeUpdate) {
+        employees.stream()
+                .filter(employee -> employee.getId().equals(employeeId)).findFirst()
+                .ifPresent(employee -> {
+                    employees.remove(employee);
+                    employees.add(employeeUpdate);
+                });
+        return employeeUpdate;
+    }
 }
