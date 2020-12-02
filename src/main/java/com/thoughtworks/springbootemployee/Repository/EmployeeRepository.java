@@ -5,6 +5,7 @@ import com.thoughtworks.springbootemployee.controller.EmployeesController;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class EmployeeRepository {
     private final List<Employee> employees = new ArrayList<>();
@@ -41,5 +42,13 @@ public class EmployeeRepository {
                 .filter(employee -> employee.getId() == id)
                 .findFirst()
                 .orElse(null);
+    }
+
+    public List<Employee> getEmployeeByPage(Integer page, Integer pageSize){
+        return employees.stream()
+                .skip((pageSize -1) * page)
+                .limit(pageSize)
+                .collect(Collectors.toList());
+
     }
 }

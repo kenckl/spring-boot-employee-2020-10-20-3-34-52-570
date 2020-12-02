@@ -85,4 +85,18 @@ public class EmployeeServiceTest {
         //then
         assertEquals(employee.getId(), actualEmployee.getId());
     }
+
+    @Test
+    void should_return_page_and_pageSize_when_getByPage_given_employee_request() {
+        //given
+        List<Employee> employeeList = asList(new Employee(), new Employee(), new Employee(), new Employee(), new Employee());
+        when(repository.getEmployeeByPage(1, 5)).thenReturn(employeeList);
+        EmployeeService employeeService = new EmployeeService(repository);
+
+        //when
+        List<Employee> actualEmployee = employeeService.getEmployeeByPage(1, 5);
+
+        //then
+        assertEquals(5, actualEmployee.size());
+    }
 }
