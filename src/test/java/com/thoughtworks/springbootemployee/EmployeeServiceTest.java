@@ -56,4 +56,15 @@ public class EmployeeServiceTest {
         //then
         assertNotEquals(employee.getSalary(), actualEmployee.getSalary());
     }
+
+    @Test
+    void should_delete_employee_when_delete_employee_by_id_when_delete_given_employee_id() {
+        //given
+        Employee employee = new Employee(1, "Ken", 18, "male", 100000);
+        EmployeeService employeeService = new EmployeeService(repository);
+        //when
+        employeeService.deleteEmployeeById(employee.getId());
+        //then
+        verify(repository, times(1)).deleteEmployeeById(employee.getId());
+    }
 }
