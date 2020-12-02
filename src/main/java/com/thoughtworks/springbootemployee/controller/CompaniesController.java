@@ -14,6 +14,7 @@ import java.util.List;
 public class CompaniesController {
 
     private final CompanyService companyService;
+    private final List<Company> companies = new ArrayList<>();
 
     public CompaniesController(CompanyService companyService) {
         this.companyService = companyService;
@@ -26,11 +27,26 @@ public class CompaniesController {
 
     @PostMapping
     public Company createCompany(@RequestBody Company createCompany){
-        return companyService.createCompany(createCompany);
+        companies.add(createCompany);
+        return createCompany;
     }
 
     @GetMapping("/{companyId}")
-    public Company getCompanyById(@PathVariable int companyId) {
-        return companyService.findCompanyById(companyId);
+    public Company getCompanyByCompanyId(@PathVariable int companyId) {
+        return companies.stream()
+                .filter(company -> company.getCompanyId().equals(companyId))
+                .findFirst()
+                .orElse(null);
+    }
+
+    @PutMapping("/{companyId}")
+    public Company updateCompanyByCompanyId(@PathVariable int companyId, @RequestBody Company companyUpdate) {
+        companies.stream()
+                .filter(company -> company.getCompanyId().equals(companyId)).findFirst()
+                .ifPresent(comapny -> {
+                    companies.remove(comapny);
+                    companies.add(companyUpdate);
+                });
+        return companyUpdate;
     }
 }
