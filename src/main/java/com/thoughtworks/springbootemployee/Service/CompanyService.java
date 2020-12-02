@@ -21,4 +21,7 @@ public class CompanyService {
         return companyRepository.addCompany(company);
     }
 
+    public Company findCompanyById(Integer id) {
+        return companyRepository.findCompanyById(id);
+    }
 }

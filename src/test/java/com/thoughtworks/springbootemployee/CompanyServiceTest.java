@@ -44,5 +44,17 @@ public class CompanyServiceTest {
         assertEquals("ABC Company", actualCompany.getCompanyName());
     }
 
+    @Test
+    void should_return_company_when_get_by_company_name_given_company_id() {
+        //given
+        Company company = new Company(1, "ABC Company");
+        when(companyRepository.findCompanyById(company.getCompanyId())).thenReturn(company);
+        CompanyService service = new CompanyService(companyRepository);
+        //when
+        Company actual = service.findCompanyById(company.getCompanyId());
+        //then
+        assertEquals(company.getCompanyId(), actual.getCompanyId());
+    }
+
 
 }

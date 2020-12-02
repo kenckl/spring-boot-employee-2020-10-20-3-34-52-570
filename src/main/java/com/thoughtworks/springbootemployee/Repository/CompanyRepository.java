@@ -18,4 +18,11 @@ public class CompanyRepository {
         companies.add(company);
         return company;
     }
+
+    public Company findCompanyById(Integer id) {
+        return companies.stream()
+                .filter(company -> company.getCompanyId() == id)
+                .findFirst()
+                .orElse(null);
+    }
 }
