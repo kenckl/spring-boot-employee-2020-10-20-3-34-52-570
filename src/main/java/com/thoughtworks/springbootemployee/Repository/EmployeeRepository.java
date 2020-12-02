@@ -35,4 +35,11 @@ public class EmployeeRepository {
                 .findFirst()
                 .ifPresent(employees::remove);
     }
+
+    public Employee findEmployeeById(Integer id){
+        return employees.stream()
+                .filter(employee -> employee.getId() == id)
+                .findFirst()
+                .orElse(null);
+    }
 }

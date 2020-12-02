@@ -51,8 +51,10 @@ public class EmployeeServiceTest {
         Employee newEmployee = new Employee(1, "Ken", 18, "male", 200000);
         when(repository.updateEmployeeById(employee.getId(), employee)).thenReturn(newEmployee);
         EmployeeService employeeService = new EmployeeService(repository);
+
         //when
         Employee actualEmployee = employeeService.updateEmployeeById(employee.getId(), employee);
+
         //then
         assertNotEquals(employee.getSalary(), actualEmployee.getSalary());
     }
@@ -62,9 +64,25 @@ public class EmployeeServiceTest {
         //given
         Employee employee = new Employee(1, "Ken", 18, "male", 100000);
         EmployeeService employeeService = new EmployeeService(repository);
+
         //when
         employeeService.deleteEmployeeById(employee.getId());
+
         //then
         verify(repository, times(1)).deleteEmployeeById(employee.getId());
+    }
+
+    @Test
+    void should_return_employee_when_get_employee_by_id_given_employee_id(){
+        //given
+        Employee employee = new Employee(1, "Ken", 18, "male", 100000);
+        when(repository.findEmployeeById(employee.getId())).thenReturn(employee);
+        EmployeeService employeeService = new EmployeeService(repository);
+
+        //when
+        Employee actualEmployee = employeeService.findEmployeeById(employee.getId());
+
+        //then
+        assertEquals(employee.getId(), actualEmployee.getId());
     }
 }
