@@ -12,7 +12,7 @@ import java.util.List;
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class CompanyServiceTest {
     CompanyRepository companyRepository = Mockito.mock(CompanyRepository.class);
@@ -61,7 +61,6 @@ public class CompanyServiceTest {
         //given
         Company oldCompany = new Company(1, "ABC Company");
         Company newCompany = new Company(1, "XYZ Company");
-
         when(companyRepository.updateCompanyById(oldCompany.getCompanyId(), newCompany)).thenReturn(newCompany);
         CompanyService service = new CompanyService(companyRepository);
 
@@ -70,6 +69,19 @@ public class CompanyServiceTest {
 
         //then
         assertEquals("XYZ Company", actualCompany.getCompanyName());
+    }
+
+    @Test
+    void should_delete_company_when_delete_company_by_id_given_company() {
+        //given
+        Company company = new Company(1, "ABC Company");
+        CompanyService service = new CompanyService(companyRepository);
+
+        //when
+        service.deleteCompanyById(company.getCompanyId());
+
+        //then
+        verify(companyRepository, times(1)).deleteCompanyById(company.getCompanyId());
     }
 
 

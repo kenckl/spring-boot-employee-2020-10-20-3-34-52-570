@@ -30,4 +30,7 @@ public class CompanyService {
     }
 
 
+    public void deleteCompanyById(Integer id) {
+        companyRepository.deleteCompanyById(id);
+    }
 }
