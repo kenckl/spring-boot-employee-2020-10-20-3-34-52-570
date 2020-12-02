@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class CompanyRepository {
@@ -43,5 +44,13 @@ public class CompanyRepository {
                 .filter(company -> company.getCompanyId() == id)
                 .findFirst()
                 .ifPresent(companies::remove);
+    }
+
+    public List<Company> getCompanyByPage(Integer page, Integer pageSize){
+        return companies.stream()
+                .skip((pageSize -1) * page)
+                .limit(pageSize)
+                .collect(Collectors.toList());
+
     }
 }

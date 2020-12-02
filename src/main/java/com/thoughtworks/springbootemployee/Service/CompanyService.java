@@ -33,4 +33,8 @@ public class CompanyService {
     public void deleteCompanyById(Integer id) {
         companyRepository.deleteCompanyById(id);
     }
+
+    public List<Company> getCompanyByPage(Integer page, Integer pageSize) {
+        return companyRepository.getCompanyByPage(page,pageSize);
+    }
 }

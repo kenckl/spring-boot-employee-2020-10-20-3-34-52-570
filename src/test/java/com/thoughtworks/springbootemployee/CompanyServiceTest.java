@@ -1,6 +1,7 @@
 package com.thoughtworks.springbootemployee;
 
 import com.thoughtworks.springbootemployee.Model.Company;
+import com.thoughtworks.springbootemployee.Model.Employee;
 import com.thoughtworks.springbootemployee.Repository.CompanyRepository;
 import com.thoughtworks.springbootemployee.Service.CompanyService;
 import com.thoughtworks.springbootemployee.Service.EmployeeService;
@@ -84,6 +85,23 @@ public class CompanyServiceTest {
         verify(companyRepository, times(1)).deleteCompanyById(company.getCompanyId());
     }
 
+    @Test
+    void should_return_part_of_company_list_when_getByPage_given_company_request() {
+        //given
+        List<Company> companies = asList(new Company(1, "AAA Company"),
+                new Company(2, "BBB Company"),
+                new Company(3, "CCC Company"),
+                new Company(4, "DDD Company"),
+                new Company(5, "EEE Company"));
+        when(companyRepository.getCompanyByPage(1, 5)).thenReturn(companies);
+        CompanyService companyService = new CompanyService(companyRepository);
+
+        //when
+        List<Company> actualCompany = companyService.getCompanyByPage(1, 5);
+
+        //then
+        assertEquals(5, actualCompany.size());
+    }
 
 
 }
