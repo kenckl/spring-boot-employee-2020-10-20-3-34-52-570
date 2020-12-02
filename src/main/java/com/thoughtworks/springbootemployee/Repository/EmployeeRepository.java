@@ -12,4 +12,9 @@ public class EmployeeRepository {
     public List<Employee> findAllEmployees() {
         return employees;
     }
+    
+    public Employee add(Employee employee){
+        employees.add(employee);
+        return employee;
+    }
 }
