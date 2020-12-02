@@ -13,4 +13,9 @@ public class CompanyRepository {
     public List<Company> findAllCompanies() {
         return companies;
     }
+
+    public Company addCompany(Company company) {
+        companies.add(company);
+        return company;
+    }
 }
