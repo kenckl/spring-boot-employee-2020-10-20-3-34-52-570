@@ -1,6 +1,7 @@
 package com.thoughtworks.springbootemployee.Repository;
 
 import com.thoughtworks.springbootemployee.Model.Company;
+import com.thoughtworks.springbootemployee.Model.Employee;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -24,5 +25,16 @@ public class CompanyRepository {
                 .filter(company -> company.getCompanyId() == id)
                 .findFirst()
                 .orElse(null);
+    }
+
+    public Company updateCompanyById(Integer id, Company newCompany){
+        companies.stream()
+                .filter(company -> company.getCompanyId() == id)
+                .findFirst()
+                .ifPresent(company -> {
+                    companies.remove(company);
+                    companies.add(newCompany);
+                });
+        return newCompany;
     }
 }

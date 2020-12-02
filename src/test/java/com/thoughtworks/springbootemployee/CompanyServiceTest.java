@@ -51,10 +51,27 @@ public class CompanyServiceTest {
         when(companyRepository.findCompanyById(company.getCompanyId())).thenReturn(company);
         CompanyService service = new CompanyService(companyRepository);
         //when
-        Company actual = service.findCompanyById(company.getCompanyId());
+        Company actualCompany = service.findCompanyById(company.getCompanyId());
         //then
-        assertEquals(company.getCompanyId(), actual.getCompanyId());
+        assertEquals(company.getCompanyId(), actualCompany.getCompanyId());
     }
+
+    @Test
+    void should_update_company_when_update_company_by_id_given_company_id() {
+        //given
+        Company oldCompany = new Company(1, "ABC Company");
+        Company newCompany = new Company(1, "XYZ Company");
+
+        when(companyRepository.updateCompanyById(oldCompany.getCompanyId(), newCompany)).thenReturn(newCompany);
+        CompanyService service = new CompanyService(companyRepository);
+
+        //when
+        Company actualCompany = service.updateCompanyById(oldCompany.getCompanyId(), newCompany);
+
+        //then
+        assertEquals("XYZ Company", actualCompany.getCompanyName());
+    }
+
 
 
 }
