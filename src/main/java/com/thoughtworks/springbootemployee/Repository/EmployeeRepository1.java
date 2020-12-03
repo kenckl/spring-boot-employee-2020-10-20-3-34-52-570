@@ -14,5 +14,7 @@ public interface EmployeeRepository1 extends MongoRepository<Employee,String>{
     Employee save (Employee employee);
     List<Employee> findByGender(String gender);
 
+    void deleteById(String id);
+
 
 }

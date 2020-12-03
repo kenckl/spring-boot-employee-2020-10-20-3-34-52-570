@@ -174,4 +174,16 @@ public class EmployeeServiceTest {
         //then
         assertEquals(expected, actual);
     }
+
+    @Test
+    void should_delete_employee_when_delete_by_id_given_in_database(){
+        //given
+        Employee employee = new Employee("1", "Ken", 21, "male", 10000);
+
+        //when
+        employeeService.deleteEmployeeById("1");
+
+        //then
+        verify(repository1, times(1)).deleteById("1");
+    }
 }

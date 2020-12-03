@@ -39,7 +39,7 @@ public class EmployeeService {
     }
 
     public void deleteEmployeeById(String id){
-        employeeRepository.deleteEmployeeById(id);
+        employeeRepository1.deleteById(id);
     }
 
     public Optional<Employee> findEmployeeById(String id){
