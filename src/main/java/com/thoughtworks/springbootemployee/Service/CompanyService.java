@@ -8,7 +8,10 @@ import com.thoughtworks.springbootemployee.Repository.EmployeeRepository1;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public class CompanyService {
     @Autowired
@@ -23,15 +26,16 @@ public class CompanyService {
 
 
     public List<Company> getAllCompanies(){
-        return companyRepository.findAllCompanies();
+        final Iterable<Company> allCompanyId = companyRepository1.findAllById(new ArrayList<>());
+        return companyRepository1.findAll();
     }
 
     public Company createCompany(Company company) {
         return companyRepository.addCompany(company);
     }
 
-    public Company findCompanyById(String id) {
-        return companyRepository.findCompanyById(id);
+    public Optional<Company> findCompanyById(String id) {
+        return companyRepository1.findCompanyById(id);
     }
 
     public Company updateCompanyById(String id, Company company) {
@@ -54,4 +58,5 @@ public class CompanyService {
     public List<Employee> getCompanyEmployee(String companyId){
         return employeeRepository1.findByCompanyId(companyId);
     }
+
 }

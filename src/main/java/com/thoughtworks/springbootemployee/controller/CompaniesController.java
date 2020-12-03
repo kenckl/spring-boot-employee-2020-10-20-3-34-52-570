@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -51,6 +52,6 @@ public class CompaniesController {
 
     @GetMapping("/{id}/employees")
     public List<Employee> getCompanyEmployees(@PathVariable("id") String id){
-        return companyService.getCompanyEmployees(id);
+        return companyService.getCompanyEmployee(id);
     }
 }

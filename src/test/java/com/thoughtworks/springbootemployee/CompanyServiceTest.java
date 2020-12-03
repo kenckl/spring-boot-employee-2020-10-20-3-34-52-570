@@ -17,6 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static java.util.Arrays.asList;
 import static org.junit.Assert.*;
@@ -28,6 +29,7 @@ public class CompanyServiceTest {
 
     @Mock
     CompanyRepository companyRepository;
+
     @Mock
     CompanyRepository1 companyRepository1;
 
@@ -145,5 +147,32 @@ public class CompanyServiceTest {
 
         //then
         assertEquals(expected, actual);
+    }
+
+    @Test
+    void should_return_company_when_get_by_id_given_in_database(){
+        //given
+        Optional<Company> expected = Optional.of(new Company("1", "ABC Company"));
+        when(companyRepository1.findById("1")).thenReturn(expected);
+
+        //when
+        Optional<Company> actual = companyService.findCompanyById("1");
+
+        //then
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void should_return_company_when_save_given_in_database(){
+        //given
+        Company expected = new Company("1", "ABC Company");
+        when(companyRepository1.save(expected)).thenReturn(expected);
+
+        //when
+        Company actual = companyService.createCompany(expected);
+
+        //then
+        assertEquals(expected, actual);
+
     }
 }
