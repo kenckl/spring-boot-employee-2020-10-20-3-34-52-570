@@ -59,7 +59,7 @@ public class EmployeeIntegrationTest {
     @Test
     public void should_return_employee_when_create_employee_given_employee() throws Exception {
         //given
-        String employeeAsJson = "{\n" +
+        String employeeToString = "{\n" +
                 "    \"name\": \"Ken\",\n" +
                 "    \"age\": 21,\n" +
                 "    \"gender\": \"male\",\n" +
@@ -72,7 +72,7 @@ public class EmployeeIntegrationTest {
         //then
         mockMvc.perform(post("/employees")
                 .contentType(APPLICATION_JSON)
-                .content(employeeAsJson))
+                .content(employeeToString))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").isString())
                 .andExpect(jsonPath("$.name").value("Ken"))

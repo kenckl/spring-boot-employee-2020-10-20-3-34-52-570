@@ -59,5 +59,14 @@ public class Employee {
         return companyId;
     }
 
+    public String getJSON(){
+        return String.format("    {\n" +
+                "        \"id\": \"%s\",\n" +
+                "        \"name\": \"%s\",\n" +
+                "        \"age\": %d,\n" +
+                "        \"gender\": \"%s\",\n" +
+                "        \"salary\": %d\n" +
+                "    }",id,name,age,gender,salary);
+    }
 }
 
