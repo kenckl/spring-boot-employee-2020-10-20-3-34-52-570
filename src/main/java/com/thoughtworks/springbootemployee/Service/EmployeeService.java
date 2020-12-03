@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmployeeService {
@@ -39,8 +40,8 @@ public class EmployeeService {
         employeeRepository.deleteEmployeeById(id);
     }
 
-    public Employee findEmployeeById(String id){
-        return employeeRepository.findEmployeeById(id);
+    public Optional<Employee> findEmployeeById(String id){
+        return employeeRepository1.findById(id);
     }
 
     public List<Employee> getEmployeesByGender(String gender) {

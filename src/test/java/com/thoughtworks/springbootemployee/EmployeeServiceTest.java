@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static java.util.Arrays.asList;
 import static org.junit.Assert.*;
@@ -106,7 +107,7 @@ public class EmployeeServiceTest {
     void should_return_all_when_get_all_given_some_employees_in_database(){
         //given
         final List<Employee> expected = Arrays.asList(new Employee("1", "Ken", 21, "male", 10000));
-        when(repository.findAllEmployees()).thenReturn(expected);
+        when(repository1.findAll()).thenReturn(expected);
 
         //when
         final List<Employee> actual = employeeService.getAllEmployees();
@@ -116,17 +117,16 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    void should_get_employee_when_get_by_id_given_in_database(){
+    void should_return_employee_when_get_by_id_given_in_database(){
         //given
-        final List<Employee> expected = Arrays.asList(new Employee("1", "Ken", 21, "male", 10000));
-        when(repository.findAllEmployees()).thenReturn(expected);
+        Optional<Employee> expected = Optional.of(new Employee("1", "Ken", 21, "male", 10000));
+        when(repository1.findById("1")).thenReturn(expected);
 
         //when
-        final List<Employee> actual = employeeService.getAllEmployees();
+        Optional<Employee> actual = employeeService.findEmployeeById("1");
 
         //then
         assertEquals(expected, actual);
     }
-
 
 }
