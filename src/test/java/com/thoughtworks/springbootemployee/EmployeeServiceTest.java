@@ -129,4 +129,17 @@ public class EmployeeServiceTest {
         assertEquals(expected, actual);
     }
 
+    @Test
+    void should_return_employee_when_save_given_in_database(){
+        //given
+        Employee expected = new Employee("1", "Ken", 21, "male", 10000);
+        when(repository1.save(expected)).thenReturn(expected);
+
+        //when
+        Employee actual = employeeService.createEmployees(expected);
+
+        //then
+        assertEquals(expected, actual);
+
+    }
 }
