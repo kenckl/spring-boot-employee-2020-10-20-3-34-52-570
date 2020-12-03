@@ -13,21 +13,23 @@ public class Employee {
     private Integer age;
     private String gender;
     private Integer salary;
-    // add field companyId
+    private String companyId;
 
-    public Employee(String id, String name, Integer age, String gender, Integer salary) {
+    public Employee(String id, String name, Integer age, String gender, Integer salary, String companyId) {
         this.id = id;
         this.name = name;
         this.age = age;
         this.gender = gender;
         this.salary = salary;
+        this.companyId = companyId;
     }
 
-    public Employee(String name, Integer age, String gender, Integer salary) {
+    public Employee(String name, Integer age, String gender, Integer salary, String companyId) {
         this.name = name;
         this.age = age;
         this.gender = gender;
         this.salary = salary;
+        this.companyId = companyId;
     }
 
     public Employee() {

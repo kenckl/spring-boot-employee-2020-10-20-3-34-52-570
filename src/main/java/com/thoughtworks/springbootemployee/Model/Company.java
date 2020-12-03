@@ -9,7 +9,6 @@ public class Company {
     @MongoId(FieldType.OBJECT_ID)
     private String companyId;
     private String companyName;
-    private List<String> employeeId;
 
     public Company(String companyId, String companyName) {
         this.companyId = companyId;

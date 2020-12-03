@@ -107,7 +107,7 @@ public class CompanyServiceTest {
     void should_return_employee_list_when_search_in_company_given_employee_and_company() {
         //given
         Company company = new Company("1", "ABC Company");
-        Employee employee = new Employee("1", "Ken", 18, "Male", 100000);
+        Employee employee = new Employee("1", "Ken", 18, "Male", 100000, "1");
         when(companyRepository.getEmployeesByCompanyId(company.getCompanyId())).thenReturn(Collections.singletonList(employee));
         CompanyService companyService = new CompanyService(companyRepository);
 
