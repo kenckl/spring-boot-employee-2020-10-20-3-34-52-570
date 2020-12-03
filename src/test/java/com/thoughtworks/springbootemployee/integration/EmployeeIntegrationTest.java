@@ -126,21 +126,17 @@ public class EmployeeIntegrationTest {
     void should_return_employee_when_get_employee_given_employee_Id() throws Exception {
         //given
         Employee employee = employeeRepository1.save(new Employee("1", "Ken", 18, "male", 10000,  "1"));
-        employeeRepository1.save(new Employee("2", "Kenny", 18, "male", 10000,  "1"));
 
         //when
         //then
         mockMvc.perform(get("/employees/"+employee.getId()))
-                .andExpect(jsonPath("$.employeeId").value("1"))
-                .andExpect(jsonPath("$.name").value(employee.getName()))
-                .andExpect(jsonPath("$.age").value(employee.getAge()))
-                .andExpect(jsonPath("$.gender").value(employee.getGender()))
-                .andExpect(jsonPath("$.salary").value(employee.getSalary()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(employee.getId()))
+                .andExpect(jsonPath("$.name").value("Ken"))
+                .andExpect(jsonPath("$.age").value(18))
+                .andExpect(jsonPath("$.gender").value("male"))
+                .andExpect(jsonPath("$.salary").value(10000))
                 .andExpect(jsonPath("$.companyId").value("1"));;
-
-        List<Employee> employeeList = employeeRepository1.findAll();
-        Assertions.assertEquals(2, employeeList.size());
-        Assertions.assertEquals("Ken", employeeList.get(0).getName());
     }
 
     @Test
@@ -151,17 +147,16 @@ public class EmployeeIntegrationTest {
 
         //when
         //then
-        mockMvc.perform(get("/employees" +"?gender="+employee.getGender()))
-                .andExpect(jsonPath("$[0].id").isString())
-                .andExpect(jsonPath("$[0].name").value(employee.getName()))
-                .andExpect(jsonPath("$[0].age").value(employee.getAge()))
-                .andExpect(jsonPath("$[0].gender").value(employee.getGender()))
-                .andExpect(jsonPath("$[0].salary").value(employee.getSalary()))
-                .andExpect(jsonPath("$.companyId").value("2"));;
-
-        List<Employee> employeeList = employeeRepository1.findAll();
-        Assertions.assertEquals(2, employeeList.size());
-        Assertions.assertEquals("male", employeeList.get(0).getGender());
+        mockMvc.perform(get("/employees" +"?gender=male"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").value(employee.getId()))
+                .andExpect(jsonPath("$[0].name").value("Ken"))
+                .andExpect(jsonPath("$[0].age").value(22))
+                .andExpect(jsonPath("$[0].gender").value("male"))
+                .andExpect(jsonPath("$[0].salary").value(10000));
     }
+
+    
+
 
 }

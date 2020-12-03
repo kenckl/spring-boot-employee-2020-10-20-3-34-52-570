@@ -54,5 +54,9 @@ public class Employee {
     public Integer getSalary() {
         return salary;
     }
+
+    public String getCompanyId() {
+        return companyId;
+    }
 }
 
