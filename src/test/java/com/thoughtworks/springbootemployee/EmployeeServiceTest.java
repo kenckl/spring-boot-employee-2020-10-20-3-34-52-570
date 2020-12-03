@@ -186,4 +186,30 @@ public class EmployeeServiceTest {
         //then
         verify(repository1, times(1)).deleteById("1");
     }
+
+    @Test
+    void should_get_limited_employee_when_get_employee_wth_page_size_given_in_database(){
+        //given
+        List<Employee> employees = new ArrayList<>();
+        Employee employee1 = new Employee("1", "Ken1", 21, "male", 10000);
+        Employee employee2 = new Employee("2", "Ken2", 21, "male", 10000);
+        Employee employee3 = new Employee("3", "Ken3", 21, "male", 10000);
+        Employee employee4 = new Employee("4", "Ken4", 21, "male", 10000);
+        employees.add(employee1);
+        employees.add(employee2);
+        employees.add(employee3);
+        employees.add(employee4);
+        when(repository1.findAll()).thenReturn(employees);
+
+        //when
+        List<Employee> actual = employeeService.getEmployeeByPage(0,3);
+
+        //then
+        assertEquals(3, actual.size());
+        assertEquals("1", actual.get(0).getId());
+        assertEquals("2", actual.get(1).getId());
+        assertEquals("3", actual.get(2).getId());
+
+    }
+
 }

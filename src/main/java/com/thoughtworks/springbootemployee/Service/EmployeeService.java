@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class EmployeeService {
@@ -51,6 +52,9 @@ public class EmployeeService {
     }
 
     public List<Employee> getEmployeeByPage(Integer page, Integer pageSize) {
-        return employeeRepository.getEmployeeByPage(page,pageSize);
+        return employeeRepository1.findAll().stream()
+                .skip(page * pageSize)
+                .limit(pageSize)
+                .collect(Collectors.toList());
     }
 }
