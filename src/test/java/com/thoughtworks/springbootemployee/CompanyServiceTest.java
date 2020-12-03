@@ -2,24 +2,20 @@ package com.thoughtworks.springbootemployee;
 
 import com.thoughtworks.springbootemployee.Model.Company;
 import com.thoughtworks.springbootemployee.Model.Employee;
-import com.thoughtworks.springbootemployee.Repository.CompanyRepository;
 import com.thoughtworks.springbootemployee.Repository.CompanyRepository1;
+import com.thoughtworks.springbootemployee.Repository.EmployeeRepository1;
 import com.thoughtworks.springbootemployee.Service.CompanyService;
-import com.thoughtworks.springbootemployee.Service.EmployeeService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.*;
 import java.util.List;
-import java.util.Optional;
+import java.util.ArrayList;
 
-import static java.util.Arrays.asList;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
@@ -28,10 +24,10 @@ import static org.mockito.Mockito.*;
 public class CompanyServiceTest {
 
     @Mock
-    CompanyRepository companyRepository;
+    CompanyRepository1 companyRepository1;
 
     @Mock
-    CompanyRepository1 companyRepository1;
+    EmployeeRepository1 employeeRepository1;
 
     @InjectMocks
     CompanyService companyService;
@@ -201,5 +197,51 @@ public class CompanyServiceTest {
 
         //then
         verify(companyRepository1, times(1)).deleteById("1");
+    }
+
+    @Test
+    void should_get_limited_company_when_get_employee_wth_page_size_given_in_database(){
+        //given
+        List<Company> companies = new ArrayList<>();
+        Company company1 = new Company("1", "AAA Company");
+        Company company2 = new Company("2", "BBB Company");
+        Company company3 = new Company("3", "CCC Company");
+        Company company4 = new Company("4", "DDD Company");
+        companies.add(company1);
+        companies.add(company2);
+        companies.add(company3);
+        companies.add(company4);
+        when(companyRepository1.findAll()).thenReturn(companies);
+
+        //when
+        List<Company> actual = companyService.getCompanyByPage(0,3);
+
+        //then
+        assertEquals(3, actual.size());
+        assertEquals("1", actual.get(0).getCompanyId());
+        assertEquals("2", actual.get(1).getCompanyId());
+        assertEquals("3", actual.get(2).getCompanyId());
+    }
+
+
+    @Test
+    void should_get_company_employees_when_get_by_id_given_company_id() {
+        //given
+        ArrayList <Employee> abcCompanyEmployees = new ArrayList<>();
+        Employee employee1 = new Employee("1", "ken1", 21, "male", 10000, "99");
+        Employee employee2 = new Employee("2", "ken2", 21, "male", 10000, "99");
+        Employee employee3 = new Employee("3", "ken3", 21, "male", 10000, "99");
+        Employee employee4 = new Employee("4", "ken4", 21, "male", 10000, "99");
+        abcCompanyEmployees.add(employee1);
+        abcCompanyEmployees.add(employee2);
+        abcCompanyEmployees.add(employee3);
+        abcCompanyEmployees.add(employee4);
+        when(employeeRepository1.findById("99").thenReturn(abcCompanyEmployees);
+
+        //when
+        List<Employee> actualList = companyService.getCompanyEmployee("99");
+
+        //then
+        assertEquals(abcCompanyEmployees, actualList);
     }
 }

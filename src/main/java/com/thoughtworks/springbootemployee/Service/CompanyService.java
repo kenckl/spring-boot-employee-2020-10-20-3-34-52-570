@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CompanyService {
@@ -22,8 +23,6 @@ public class CompanyService {
 
     @Autowired
     private EmployeeRepository1 employeeRepository1;
-    //add employeeService
-
 
     public List<Company> getAllCompanies(){
         final Iterable<Company> allCompanyId = companyRepository1.findAllById(new ArrayList<>());
@@ -31,7 +30,7 @@ public class CompanyService {
     }
 
     public Company createCompany(Company company) {
-        return companyRepository.addCompany(company);
+        return companyRepository1.save(company);
     }
 
     public Optional<Company> findCompanyById(String id) {
@@ -39,20 +38,21 @@ public class CompanyService {
     }
 
     public Company updateCompanyById(String id, Company company) {
-        return companyRepository.updateCompanyById(id, company);
+        if (companyRepository1.existsById(id))
+            return companyRepository1.save(company);
+        return null;
     }
 
 
     public void deleteCompanyById(String id) {
-        companyRepository.deleteCompanyById(id);
+        companyRepository1.deleteById(id);
     }
 
     public List<Company> getCompanyByPage(Integer page, Integer pageSize) {
-        return companyRepository.getCompanyByPage(page,pageSize);
-    }
-
-    public List<Employee> getEmployeesByCompanyId(String companyId) {
-        return companyRepository.getEmployeesByCompanyId(companyId);
+        return companyRepository1.findAll().stream()
+                .skip(page * pageSize)
+                .limit(pageSize)
+                .collect(Collectors.toList());
     }
 
     public List<Employee> getCompanyEmployee(String companyId){

@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
 import java.util.List;
 
 public class Company {
+
     @MongoId(FieldType.OBJECT_ID)
     private String companyId;
     private String companyName;
