@@ -128,4 +128,30 @@ public class CompanyIntegratonTest {
         assertFalse(companyRepository1.findById(company.getCompanyId()).isPresent());
     }
 
+    @Test
+    public void should_return_company_employees_when_get_employees_by_id_given_company_id() throws Exception {
+        //given
+        Employee employee1 = employeeRepository1.save(new Employee("Ken1", 20, "male", 100000));
+        Employee employee2 = employeeRepository1.save(new Employee("Ken2", 18, "male", 100000));
+        List<Employee> employees = new ArrayList<>();
+        employees.add(employee1);
+        employees.add(employee2);
+        Company company = new Company("ABC Company", 1, employees);
+        companyRepository1.save(company);
+        //when
+        //then
+        mockMvc.perform(get("/companies/" + company.getCompanyId() + "/employees"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").value(employee1.getId()))
+                .andExpect(jsonPath("$[0].name").value("Ken1"))
+                .andExpect(jsonPath("$[0].age").value(20))
+                .andExpect(jsonPath("$[0].gender").value("male"))
+                .andExpect(jsonPath("$[0].salary").value(100000))
+                .andExpect(jsonPath("$[1].id").value(employee2.getId()))
+                .andExpect(jsonPath("$[1].name").value("Ken2"))
+                .andExpect(jsonPath("$[1].age").value(18))
+                .andExpect(jsonPath("$[1].gender").value("male"))
+                .andExpect(jsonPath("$[1].salary").value(100000));
+    }
+
 }
