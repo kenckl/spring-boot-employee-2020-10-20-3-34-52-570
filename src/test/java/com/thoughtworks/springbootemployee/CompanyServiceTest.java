@@ -172,7 +172,21 @@ public class CompanyServiceTest {
         Company actual = companyService.createCompany(expected);
 
         //then
-        assertEquals(expected, actual);
+        assertEquals(expected.getCompanyId(), actual.getCompanyId());
+        assertEquals(expected.getCompanyName(), actual.getCompanyName());
+    }
 
+    @Test
+    void should_return_update_company_when_update_by_id_given_in_database(){
+        //given
+        Company expected = new Company("1", "ABC Company");
+        when(companyRepository1.existsById("1")).thenReturn(true);
+        when(companyRepository1.save(expected)).thenReturn(expected);
+
+        //when
+        Company actual = companyService.updateCompanyById("1", expected);
+
+        //then
+        assertEquals(expected, actual);
     }
 }
