@@ -9,12 +9,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -61,7 +63,18 @@ public class CompanyIntegratonTest {
     @Test
     public void should_return_company_when_create_company_given_company() throws Exception {
         //given
-        
+        Employee employee = employeeRepository1.save(new Employee("Ken", 18, "male", 100000));
+        String companyAsJson = "{\n" +
+                "    \"name\": \"ABC Company\",\n" +
+                "    \"employeesNumber\": 1,\n" +
+                "}";
+        //when
+        //then
+        mockMvc.perform(post("/companies").contentType(MediaType.APPLICATION_JSON).content(companyAsJson))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").isString())
+                .andExpect(jsonPath("$.name").value("ABC Company"))
+                .andExpect(jsonPath("$.employeesNumber").value(1));
     }
 
 }
