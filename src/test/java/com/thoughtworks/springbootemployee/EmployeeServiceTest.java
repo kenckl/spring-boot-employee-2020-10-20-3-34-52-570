@@ -12,6 +12,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -141,5 +142,22 @@ public class EmployeeServiceTest {
         //then
         assertEquals(expected, actual);
 
+    }
+
+    @Test
+    void should_return_employee_when_get_by_gender_given_in_database(){
+        //given
+        Employee employee1 = new Employee("1", "Ken", 21, "male", 10000);
+        Employee employee2 = new Employee("1", "Kenny", 21, "male", 10000);
+        List<Employee> expected = new ArrayList<>();
+        expected.add(employee1);
+        expected.add(employee2);
+        when(repository1.findByGender("male")).thenReturn(expected);
+
+        //when
+        List<Employee> actual = employeeService.getEmployeeByGender("male");
+
+        //then
+        assertEquals(expected, actual);
     }
 }

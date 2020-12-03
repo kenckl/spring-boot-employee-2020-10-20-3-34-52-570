@@ -12,6 +12,7 @@ public interface EmployeeRepository1 extends MongoRepository<Employee,String>{
     List<Employee> findAll();
     Optional<Employee> findById(String id);
     Employee save (Employee employee);
+    List<Employee> findByGender(String gender);
 
 
 }
