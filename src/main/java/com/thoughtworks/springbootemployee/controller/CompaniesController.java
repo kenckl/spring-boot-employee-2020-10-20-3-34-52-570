@@ -30,12 +30,12 @@ public class CompaniesController {
     }
 
     @GetMapping("/{companyId}")
-    public Optional<Company> getCompanyByCompanyId(@PathVariable int companyId) {
+    public Optional<Company> getCompanyByCompanyId(@PathVariable String companyId) {
         return companyService.findCompanyById(companyId);
     }
 
     @PutMapping("/{companyId}")
-    public Company updateCompanyByCompanyId(@PathVariable int companyId, @RequestBody Company companyUpdate) {
+    public Company updateCompanyByCompanyId(@PathVariable String companyId, @RequestBody Company companyUpdate) {
         return companyService.updateCompanyById(companyId, companyUpdate);
     }
 
