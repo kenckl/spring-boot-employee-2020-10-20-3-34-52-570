@@ -189,4 +189,17 @@ public class CompanyServiceTest {
         //then
         assertEquals(expected, actual);
     }
+
+    @Test
+    void should_delete_company_when_delete_by_id_given_in_database(){
+
+        //given
+        Company expected = new Company("1", "ABC Company");
+
+        //when
+        companyService.deleteCompanyById("1");
+
+        //then
+        verify(companyRepository1, times(1)).deleteById("1");
+    }
 }
