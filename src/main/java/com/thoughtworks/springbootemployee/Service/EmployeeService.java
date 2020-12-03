@@ -19,11 +19,6 @@ public class EmployeeService {
     @Autowired
     private EmployeeRepository1 employeeRepository1;
 
-
-//    public EmployeeService(EmployeeRepository1 employeeRepository1){
-//        this.employeeRepository1 = employeeRepository1;
-//    }
-
     public List<Employee> getAllEmployees(){
         final Iterable<Employee> allId = employeeRepository1.findAllById(new ArrayList<>());
         return employeeRepository1.findAll();
