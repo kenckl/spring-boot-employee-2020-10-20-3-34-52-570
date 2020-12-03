@@ -142,8 +142,8 @@ public class EmployeeIntegrationTest {
     @Test
     void should_return_all_male_employees_when_get_employee_given_gender_male() throws Exception {
         //given
-        Employee employee = employeeRepository1.save(new Employee("3", "Ken", 22, "male",  10000,"2"));
-        employeeRepository1.save(new Employee("4", "Kate", 18, "female",  10000,"3"));
+        Employee employee = employeeRepository1.save(new Employee("Ken", 22, "male",  10000));
+        employeeRepository1.save(new Employee("Kate", 18, "female",  10000));
 
         //when
         //then
@@ -156,7 +156,30 @@ public class EmployeeIntegrationTest {
                 .andExpect(jsonPath("$[0].salary").value(10000));
     }
 
-    
+    @Test
+    public void should_return_limited_employees_by_page_when_get_employee_by_page_given_page_size() throws Exception {
+        //given
+        Employee employee1 = employeeRepository1.save(new Employee("Ken", 18, "male", 100000));
+        Employee employee2 = employeeRepository1.save(new Employee("Kenny", 20, "male", 100000));
+        employeeRepository1.save(employee1);
+        employeeRepository1.save(employee2);
+        //when
+
+        //then
+        mockMvc.perform(get("/employees").param("page", "1").param("pageSize", "2"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").value(employee1.getId()))
+                .andExpect(jsonPath("$[0].name").value("Ken"))
+                .andExpect(jsonPath("$[0].age").value(18))
+                .andExpect(jsonPath("$[0].gender").value("male"))
+                .andExpect(jsonPath("$[0].salary").value(100000))
+                .andExpect(jsonPath("$[1].id").value(employee2.getId()))
+                .andExpect(jsonPath("$[1].name").value("Kenny"))
+                .andExpect(jsonPath("$[1].age").value(20))
+                .andExpect(jsonPath("$[1].gender").value("male"))
+                .andExpect(jsonPath("$[1].salary").value(100000));
+
+    }
 
 
 }
