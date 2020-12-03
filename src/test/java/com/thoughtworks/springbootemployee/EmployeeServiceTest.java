@@ -160,4 +160,18 @@ public class EmployeeServiceTest {
         //then
         assertEquals(expected, actual);
     }
+
+    @Test
+    void should_return_update_employee_when_update_by_id_given_in_database(){
+        //given
+        Employee expected = new Employee("1", "Ken", 21, "male", 10000);
+        when(repository1.existsById("1")).thenReturn(true);
+        when(repository1.save(expected)).thenReturn(expected);
+
+        //when
+        Employee actual = employeeService.updateEmployeeById("1", expected);
+
+        //then
+        assertEquals(expected, actual);
+    }
 }

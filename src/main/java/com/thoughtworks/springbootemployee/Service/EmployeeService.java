@@ -33,7 +33,9 @@ public class EmployeeService {
     }
 
     public Employee updateEmployeeById(String id, Employee employee){
-        return employeeRepository.updateEmployeeById(id, employee);
+        if (employeeRepository1.existsById(id))
+            return employeeRepository1.save(employee);
+        return null;
     }
 
     public void deleteEmployeeById(String id){
