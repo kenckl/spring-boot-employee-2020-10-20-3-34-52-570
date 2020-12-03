@@ -2,12 +2,13 @@ package com.thoughtworks.springbootemployee.Repository;
 
 import com.thoughtworks.springbootemployee.Model.Company;
 import com.thoughtworks.springbootemployee.Model.Employee;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
+@Repository
 public class CompanyRepository {
     private final List<Company> companies = new ArrayList<>();
 
@@ -20,14 +21,14 @@ public class CompanyRepository {
         return company;
     }
 
-    public Company findCompanyById(Integer id) {
+    public Company findCompanyById(String id) {
         return companies.stream()
                 .filter(company -> company.getCompanyId() == id)
                 .findFirst()
                 .orElse(null);
     }
 
-    public Company updateCompanyById(Integer id, Company newCompany){
+    public Company updateCompanyById(String id, Company newCompany){
         companies.stream()
                 .filter(company -> company.getCompanyId() == id)
                 .findFirst()
@@ -38,7 +39,7 @@ public class CompanyRepository {
         return newCompany;
     }
 
-    public void deleteCompanyById(Integer id) {
+    public void deleteCompanyById(String id) {
         companies.stream()
                 .filter(company -> company.getCompanyId() == id)
                 .findFirst()
@@ -53,7 +54,7 @@ public class CompanyRepository {
 
     }
 
-    public List<Employee> getEmployeesByCompanyId(Integer companyId) {
+    public List<Employee> getEmployeesByCompanyId(String companyId) {
         EmployeeRepository employeeRepository = new EmployeeRepository();
         return employeeRepository.findAllEmployees().stream()
                 .filter(employee -> employee.getId() == companyId)

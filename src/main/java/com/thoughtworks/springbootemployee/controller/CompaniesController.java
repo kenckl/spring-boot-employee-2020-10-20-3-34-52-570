@@ -50,7 +50,7 @@ public class CompaniesController {
     }
 
     @DeleteMapping("/{companyId}")
-    public void deleteCompanyByCompanyId(@PathVariable Integer companyId){
+    public void deleteCompanyByCompanyId(@PathVariable String companyId){
         companies.stream()
                 .filter(company -> company.getCompanyId().equals(companyId))
                 .findFirst()

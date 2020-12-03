@@ -1,11 +1,15 @@
 package com.thoughtworks.springbootemployee.Repository;
 
 import com.thoughtworks.springbootemployee.Model.Employee;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Repository
 public class EmployeeRepository {
     private final List<Employee> employees = new ArrayList<>();
 
@@ -18,7 +22,7 @@ public class EmployeeRepository {
         return employee;
     }
 
-    public Employee updateEmployeeById(Integer id, Employee newEmployee){
+    public Employee updateEmployeeById(String id, Employee newEmployee){
         employees.stream()
              .filter(employee -> employee.getId() == id)
              .findFirst()
@@ -29,18 +33,25 @@ public class EmployeeRepository {
         return newEmployee;
     }
 
-    public void deleteEmployeeById(Integer id) {
+    public void deleteEmployeeById(String id) {
         employees.stream()
                 .filter(employee -> employee.getId() == (id))
                 .findFirst()
                 .ifPresent(employees::remove);
     }
 
-    public Employee findEmployeeById(Integer id){
+    // use .equals() to replace ==
+    public Employee findEmployeeById(String id){
         return employees.stream()
                 .filter(employee -> employee.getId() == id)
                 .findFirst()
                 .orElse(null);
+    }
+
+    public List<Employee> getEmployeeByGender(String gender) {
+        return employees.stream()
+                .filter(employee -> employee.getGender().equals(gender))
+                .collect(Collectors.toList());
     }
 
     public List<Employee> getEmployeeByPage(Integer page, Integer pageSize){
