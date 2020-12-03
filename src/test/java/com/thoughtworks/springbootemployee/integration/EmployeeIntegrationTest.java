@@ -13,6 +13,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 import java.util.List;
@@ -84,9 +87,8 @@ public class EmployeeIntegrationTest {
     }
 
     @Test
-    public void should_return_updated_employee_when_update_employee_given_an_employee() throws Exception {
+    public void should_return_updated_employee_when_update_employee_given_employee() throws Exception {
         //given
-        employeeRepository1.deleteAll();
         Employee employee = employeeRepository1.save(new Employee("Ken", 18, "male", 100000));
         String employeeToString = " {\n" +
                 "            \"name\": \"Ken\",\n" +
@@ -107,6 +109,20 @@ public class EmployeeIntegrationTest {
     }
 
     @Test
+    public void should_delete_employee_when_delete_given_employee_id() throws Exception {
+        //given
+        Employee employee = employeeRepository1.save(new Employee("Ken", 18, "Male", 100000));
+
+        //when
+
+        //then
+        mockMvc.perform(delete("/employees/" + employee.getId()))
+                .andExpect(status().isOk());
+        assertFalse(employeeRepository1.findById(employee.getId()).isPresent());
+    }
+
+
+    @Test
     void should_return_employee_when_get_employee_given_employee_Id() throws Exception {
         //given
         Employee employee = employeeRepository1.save(new Employee("1", "Ken", 18, "male", 10000,  "1"));
@@ -115,7 +131,7 @@ public class EmployeeIntegrationTest {
         //when
         //then
         mockMvc.perform(get("/employees/"+employee.getId()))
-                .andExpect(jsonPath("$.employeeId").isString())
+                .andExpect(jsonPath("$.employeeId").value("1"))
                 .andExpect(jsonPath("$.name").value(employee.getName()))
                 .andExpect(jsonPath("$.age").value(employee.getAge()))
                 .andExpect(jsonPath("$.gender").value(employee.getGender()))
