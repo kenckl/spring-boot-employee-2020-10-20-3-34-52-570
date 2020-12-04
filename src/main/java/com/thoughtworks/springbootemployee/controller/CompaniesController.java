@@ -24,9 +24,10 @@ public class CompaniesController {
     private final CompanyMapper comapnyMapper;
     private final EmployeeMapper employeeMapper;
 
-    public CompanyController(CompanyService companyService, CompanyMapper companyMapper){
+    public CompanyController(CompanyService companyService, CompanyMapper companyMapper, EmployeeMapper employeeMapper){
         this.companyService = companyService;
         this.comapnyMapper = companyMapper;
+        this.employeeMapper = employeeMapper;
     }
 
     @GetMapping
