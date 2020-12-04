@@ -147,6 +147,7 @@ public class CompanyIntegratonTest {
         //then
         mockMvc.perform(get("/companies/" + company.getCompanyId() + "/employees"))
                 .andExpect(status().isOk())
+                // check hasSize()
                 .andExpect(jsonPath("$[0].id").value(employee1.getId()))
                 .andExpect(jsonPath("$[0].name").value("Ken1"))
                 .andExpect(jsonPath("$[0].age").value(21))
@@ -168,6 +169,7 @@ public class CompanyIntegratonTest {
         List<Employee> employees2 = new ArrayList<>();
         employees1.add(employee1);
         employees2.add(employee2);
+        // add more company
         Company company1 = new Company("ABC Company", 1, employees1);
         companyRepository1.save(company1);
         Company company2 = new Company("XYZ Company", 1, employees2);
@@ -176,6 +178,7 @@ public class CompanyIntegratonTest {
         //then
         mockMvc.perform(get("/companies").param("page", "1").param("pageSize", "2"))
                 .andExpect(status().isOk())
+                //add hasSize() test
                 .andExpect(jsonPath("$[0].companyId").value(company1.getCompanyId()))
                 .andExpect(jsonPath("$[0].companyName").value("ABC Company"))
                 .andExpect(jsonPath("$[0].totalEmployee").value(1))

@@ -22,7 +22,6 @@ public class CompanyService {
     private EmployeeRepository1 employeeRepository1;
 
     public List<Company> getAllCompanies(){
-        final Iterable<Company> allCompanyId = companyRepository1.findAllById(new ArrayList<>());
         return companyRepository1.findAll();
     }
 
@@ -34,6 +33,8 @@ public class CompanyService {
         return companyRepository1.findCompanyById(id);
     }
 
+    // handle exception if null
+    // check if company.get(id) == id
     public Company updateCompanyById(String id, Company company) {
         if (companyRepository1.existsById(id))
             return companyRepository1.save(company);
@@ -45,6 +46,7 @@ public class CompanyService {
         companyRepository1.deleteById(id);
     }
 
+    // findAll(pagable) in repository
     public List<Company> getCompanyByPage(Integer page, Integer pageSize) {
         return companyRepository1.findAll().stream()
                 .skip(page * pageSize)

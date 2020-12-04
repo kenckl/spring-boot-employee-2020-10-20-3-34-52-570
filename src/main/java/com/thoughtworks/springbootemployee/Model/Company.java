@@ -1,10 +1,12 @@
 package com.thoughtworks.springbootemployee.Model;
 
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.FieldType;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import java.util.List;
 
+@Document
 public class Company {
 
     @MongoId(FieldType.OBJECT_ID)

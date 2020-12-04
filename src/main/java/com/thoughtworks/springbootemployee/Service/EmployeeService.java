@@ -17,7 +17,6 @@ public class EmployeeService {
     private EmployeeRepository1 employeeRepository1;
 
     public List<Employee> getAllEmployees(){
-        final Iterable<Employee> allId = employeeRepository1.findAllById(new ArrayList<>());
         return employeeRepository1.findAll();
     }
 
@@ -25,6 +24,7 @@ public class EmployeeService {
         return employeeRepository1.save(employee);
     }
 
+    // similar to company service
     public Employee updateEmployeeById(String id, Employee employee){
         if (employeeRepository1.existsById(id))
             return employeeRepository1.save(employee);

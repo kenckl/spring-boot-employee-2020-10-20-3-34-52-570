@@ -61,7 +61,6 @@ public class EmployeeIntegrationTest {
                 "    \"age\": 21,\n" +
                 "    \"gender\": \"male\",\n" +
                 "    \"salary\": 10000\n" +
-                "    \"companyId\": 1\n" +
                 "}";
 
         //when
@@ -75,7 +74,8 @@ public class EmployeeIntegrationTest {
                 .andExpect(jsonPath("$.name").value("Ken"))
                 .andExpect(jsonPath("$.age").value(21))
                 .andExpect(jsonPath("$.gender").value("male"))
-                .andExpect(jsonPath("$.salary").value(10000));
+                .andExpect(jsonPath("$.salary").value(10000))
+                .andExpect(jsonPath("$.companyId").isString());
 
         List<Employee> employees = employeeRepository1.findAll();
         assertEquals(1, employees.size());
