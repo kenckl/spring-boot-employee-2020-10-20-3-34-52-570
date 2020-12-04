@@ -3,6 +3,7 @@ package com.thoughtworks.springbootemployee.controller;
 import com.thoughtworks.springbootemployee.Model.Company;
 import com.thoughtworks.springbootemployee.Model.Employee;
 import com.thoughtworks.springbootemployee.Service.CompanyService;
+import com.thoughtworks.springbootemployee.dto.CompanyRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +18,12 @@ public class CompaniesController {
     @Autowired
     private CompanyService companyService;
     private final List<Company> companies = new ArrayList<>();
+    private final CompanyMapper comapnyMapper;
+
+    public CompanyController(CompanyService companyService, CompanyMapper companyMapper){
+        this.companyService = companyService;
+        this.comapnyMapper = companyMapper;
+    }
 
     @GetMapping
     public List<Company> getCompanyList(){
@@ -24,8 +31,9 @@ public class CompaniesController {
     }
 
     @PostMapping
-    public Company createCompany(@RequestBody Company createCompany){
-        return companyService.createCompany(createCompany);
+    public CompanyResponse createCompany(@RequestBody CompanyRequest companyRequest){
+        Company company = companyService.addCompany(comapnyMapper.toEntity(companyRequest));
+        return comapnyMapper.toResponse(company);
     }
 
     @GetMapping("/{companyId}")

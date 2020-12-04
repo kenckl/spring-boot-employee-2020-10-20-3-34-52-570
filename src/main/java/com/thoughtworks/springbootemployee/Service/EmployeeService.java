@@ -2,6 +2,7 @@ package com.thoughtworks.springbootemployee.Service;
 
 import com.thoughtworks.springbootemployee.Model.Employee;
 import com.thoughtworks.springbootemployee.Repository.EmployeeRepository1;
+import com.thoughtworks.springbootemployee.exception.EmployeeNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,18 +26,20 @@ public class EmployeeService {
     }
 
     // similar to company service
-    public Employee updateEmployeeById(String id, Employee employee){
-        if (employeeRepository1.existsById(id))
+    public Employee updateEmployeeById(String id, Employee employee) throws EmployeeNotFoundException {
+        if (employeeRepository1.existsById(id)){
+            employee.setId(id);
             return employeeRepository1.save(employee);
-        return null;
+        }
+        throw new EmployeeNotFoundException();
     }
 
     public void deleteEmployeeById(String id){
         employeeRepository1.deleteById(id);
     }
 
-    public Optional<Employee> findEmployeeById(String id){
-        return employeeRepository1.findById(id);
+    public Employee findEmployeeById(String id) throws EmployeeNotFoundException {
+        return employeeRepository1.findById(id).orElseThrow(() -> new EmployeeNotFoundException());
     }
 
     public List<Employee> getEmployeeByGender(String gender) {

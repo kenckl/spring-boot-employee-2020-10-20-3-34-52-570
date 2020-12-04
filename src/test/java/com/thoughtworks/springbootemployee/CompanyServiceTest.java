@@ -48,7 +48,7 @@ public class CompanyServiceTest {
     @Test
     void should_return_company_when_get_by_id_given_in_database(){
         //given
-        Optional<Company> expected = Optional.of(new Company("1", "ABC Company"));
+        Company expected = Optional.of(new Company("1", "ABC Company"));
         when(companyRepository1.findById("1")).thenReturn(expected);
 
         //when

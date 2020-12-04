@@ -3,6 +3,7 @@ package com.thoughtworks.springbootemployee;
 import com.thoughtworks.springbootemployee.Model.Employee;
 import com.thoughtworks.springbootemployee.Repository.EmployeeRepository1;
 import com.thoughtworks.springbootemployee.Service.EmployeeService;
+import com.thoughtworks.springbootemployee.exception.EmployeeNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -21,7 +22,7 @@ import static org.mockito.Mockito.*;
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
 public class EmployeeServiceTest {
-    
+
     @Mock
     EmployeeRepository1 repository1;
 
@@ -113,13 +114,13 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    void should_return_employee_when_get_by_id_given_in_database(){
+    void should_return_employee_when_get_by_id_given_in_database() throws EmployeeNotFoundException {
         //given
-        Optional<Employee> expected = Optional.of(new Employee("1", "Ken", 21, "male", 10000, "1"));
-        when(repository1.findById("1")).thenReturn(expected);
+        Employee expected = new Employee("1", "Ken", 21, "male", 10000, "1");
+        when(repository1.findById("1")).thenReturn(Optional.of(expected));
 
         //when
-        Optional<Employee> actual = employeeService.findEmployeeById("1");
+        Employee actual = employeeService.findEmployeeById("1");
 
         //then
         assertEquals(expected, actual);
@@ -157,7 +158,7 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    void should_return_update_employee_when_update_by_id_given_in_database(){
+    void should_return_update_employee_when_update_by_id_given_in_database() throws EmployeeNotFoundException {
         //given
         Employee expected = new Employee("1", "Ken", 21, "male", 10000, "1");
         when(repository1.existsById("1")).thenReturn(true);

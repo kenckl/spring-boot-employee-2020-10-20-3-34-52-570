@@ -4,10 +4,11 @@ import com.thoughtworks.springbootemployee.Model.Company;
 import com.thoughtworks.springbootemployee.Model.Employee;
 import com.thoughtworks.springbootemployee.Repository.CompanyRepository1;
 import com.thoughtworks.springbootemployee.Repository.EmployeeRepository1;
+import com.thoughtworks.springbootemployee.exception.CompanyNotFoundException;
+import com.thoughtworks.springbootemployee.exception.EmployeeNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -29,13 +30,14 @@ public class CompanyService {
         return companyRepository1.save(company);
     }
 
-    public Optional<Company> findCompanyById(String id) {
-        return companyRepository1.findCompanyById(id);
+    public Company findCompanyById(String id) throws CompanyNotFoundException {
+        return companyRepository1.findByCompanyId(id).orElseThrow(() -> new CompanyNotFoundException());
     }
 
     // handle exception if null
     // check if company.get(id) == id
     public Company updateCompanyById(String id, Company company) {
+        Company company = findByCompanyId(id);
         if (companyRepository1.existsById(id))
             return companyRepository1.save(company);
         return null;
