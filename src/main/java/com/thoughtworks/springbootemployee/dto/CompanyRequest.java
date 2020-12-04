@@ -13,11 +13,18 @@ public class CompanyRequest {
         this.employees = employees;
     }
 
+    public CompanyRequest(){
+
+    }
     public String getCompanyName() {
         return companyName;
     }
 
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
+    }
+
+    public List<Employee> getEmployees(){
+        return employees;
     }
 }

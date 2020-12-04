@@ -2,7 +2,7 @@ package com.thoughtworks.springbootemployee.mapper;
 
 import com.thoughtworks.springbootemployee.Model.Employee;
 import com.thoughtworks.springbootemployee.dto.EmployeeRequest;
-import com.thoughtworks.springbootemployee.dto.EmployeeResponse;
+import com.thoughtworks.springbootemployee.dto.CompanyResponse;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
@@ -21,8 +21,8 @@ public class EmployeeMapper {
         return employee;
     }
 
-    public EmployeeResponse toResponse(Employee employee){
-        EmployeeResponse employeeResponse = new EmployeeResponse();
+    public CompanyResponse toResponse(Employee employee){
+        CompanyResponse employeeResponse = new CompanyResponse();
 
 //        employeeResponse.setId(employee.getId());
 //        employeeResponse.setName(employee.getName());

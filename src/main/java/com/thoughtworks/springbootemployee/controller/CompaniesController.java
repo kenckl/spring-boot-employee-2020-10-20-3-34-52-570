@@ -4,12 +4,16 @@ import com.thoughtworks.springbootemployee.Model.Company;
 import com.thoughtworks.springbootemployee.Model.Employee;
 import com.thoughtworks.springbootemployee.Service.CompanyService;
 import com.thoughtworks.springbootemployee.dto.CompanyRequest;
+import com.thoughtworks.springbootemployee.dto.CompanyResponse;
+import com.thoughtworks.springbootemployee.mapper.CompanyMapper;
+import com.thoughtworks.springbootemployee.mapper.EmployeeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/companies")
@@ -17,8 +21,8 @@ public class CompaniesController {
 
     @Autowired
     private CompanyService companyService;
-    private final List<Company> companies = new ArrayList<>();
     private final CompanyMapper comapnyMapper;
+    private final EmployeeMapper employeeMapper;
 
     public CompanyController(CompanyService companyService, CompanyMapper companyMapper){
         this.companyService = companyService;
@@ -26,8 +30,9 @@ public class CompaniesController {
     }
 
     @GetMapping
-    public List<Company> getCompanyList(){
-        return companyService.getAllCompanies();
+    public List<CompanyResponse> getCompanyList(){
+        List<Company> companies = companyService.getAllCompanies();
+        return companies.stream().map(comapnyMapper::toResponse).collect(Collectors.toList());
     }
 
     @PostMapping
