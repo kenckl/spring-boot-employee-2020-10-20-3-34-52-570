@@ -2,7 +2,6 @@ package com.thoughtworks.springbootemployee.Service;
 
 import com.thoughtworks.springbootemployee.Model.Company;
 import com.thoughtworks.springbootemployee.Model.Employee;
-import com.thoughtworks.springbootemployee.Repository.CompanyRepository;
 import com.thoughtworks.springbootemployee.Repository.CompanyRepository1;
 import com.thoughtworks.springbootemployee.Repository.EmployeeRepository1;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +14,6 @@ import java.util.stream.Collectors;
 
 @Service
 public class CompanyService {
-    @Autowired
-    private CompanyRepository companyRepository;
 
     @Autowired
     private CompanyRepository1 companyRepository1;

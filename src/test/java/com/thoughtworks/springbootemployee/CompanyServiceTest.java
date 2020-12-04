@@ -202,7 +202,7 @@ public class CompanyServiceTest {
     @Test
     void should_get_limited_company_when_get_employee_wth_page_size_given_in_database(){
         //given
-        List<Company> companies = new ArrayList<>();
+        ArrayList<Company> companies = new ArrayList<>();
         Company company1 = new Company("1", "AAA Company");
         Company company2 = new Company("2", "BBB Company");
         Company company3 = new Company("3", "CCC Company");
@@ -227,22 +227,21 @@ public class CompanyServiceTest {
     @Test
     void should_get_company_employees_when_get_by_id_given_company_id() {
         //given
-//        ArrayList <Employee> abcCompanyEmployees = new ArrayList<>();
-//        Employee employee1 = new Employee("1", "ken1", 21, "male", 10000, "99");
-//        Employee employee2 = new Employee("2", "ken2", 21, "male", 10000, "99");
-//        Employee employee3 = new Employee("3", "ken3", 21, "male", 10000, "99");
-//        Employee employee4 = new Employee("4", "ken4", 21, "male", 10000, "99");
-//        abcCompanyEmployees.add(employee1);
-//        abcCompanyEmployees.add(employee2);
-//        abcCompanyEmployees.add(employee3);
-//        abcCompanyEmployees.add(employee4);
-        final Company expected = new Company("1","ABC Company");
-        when(companyRepository1.findById(any())).thenReturn(Optional.of(expected));
+        ArrayList <Employee> abcCompanyEmployees = new ArrayList<>();
+        Employee employee1 = new Employee("1", "ken1", 21, "male", 10000, "99");
+        Employee employee2 = new Employee("2", "ken2", 21, "male", 10000, "99");
+        Employee employee3 = new Employee("3", "ken3", 21, "male", 10000, "99");
+        Employee employee4 = new Employee("4", "ken4", 21, "male", 10000, "99");
+        abcCompanyEmployees.add(employee1);
+        abcCompanyEmployees.add(employee2);
+        abcCompanyEmployees.add(employee3);
+        abcCompanyEmployees.add(employee4);
+        when(employeeRepository1.findByCompanyId(anyString())).thenReturn(abcCompanyEmployees);
 
         //when
-        List<Employee> actualList = companyService.getCompanyEmployee("1");
+        List<Employee> actualList = companyService.getCompanyEmployee("99");
 
         //then
-        assertEquals(expected, actualList);
+        assertEquals(abcCompanyEmployees, actualList);
     }
 }

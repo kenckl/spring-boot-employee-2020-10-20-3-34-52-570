@@ -1,7 +1,6 @@
 package com.thoughtworks.springbootemployee;
 
 import com.thoughtworks.springbootemployee.Model.Employee;
-import com.thoughtworks.springbootemployee.Repository.EmployeeRepository;
 import com.thoughtworks.springbootemployee.Repository.EmployeeRepository1;
 import com.thoughtworks.springbootemployee.Service.EmployeeService;
 import org.junit.jupiter.api.Test;
@@ -22,9 +21,7 @@ import static org.mockito.Mockito.*;
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
 public class EmployeeServiceTest {
-
-    @Mock
-    EmployeeRepository repository;
+    
     @Mock
     EmployeeRepository1 repository1;
 
