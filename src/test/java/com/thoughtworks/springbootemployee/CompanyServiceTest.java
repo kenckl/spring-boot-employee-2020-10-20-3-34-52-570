@@ -141,7 +141,7 @@ public class CompanyServiceTest {
         when(employeeRepository1.findByCompanyId(anyString())).thenReturn(abcCompanyEmployees);
 
         //when
-        List<Employee> actualList = companyService.getCompanyEmployee("99");
+        List<Employee> actualList = companyService. getCompanyEmployee("99");
 
         //then
         assertEquals(abcCompanyEmployees, actualList);

@@ -5,11 +5,11 @@ import com.thoughtworks.springbootemployee.Model.Employee;
 import com.thoughtworks.springbootemployee.Service.CompanyService;
 import com.thoughtworks.springbootemployee.dto.CompanyRequest;
 import com.thoughtworks.springbootemployee.dto.CompanyResponse;
-import com.thoughtworks.springbootemployee.dto.EmployeeResponse;
 import com.thoughtworks.springbootemployee.exception.CompanyNotFoundException;
+import com.thoughtworks.springbootemployee.exception.EmployeeNotFoundException;
 import com.thoughtworks.springbootemployee.mapper.CompanyMapper;
 import com.thoughtworks.springbootemployee.mapper.EmployeeMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -64,18 +64,14 @@ public class CompaniesController {
     }
 
     @GetMapping(params = {"page", "pageSize"})
-    public List<CompanyResponse> getCompanyByPage(@RequestParam("page") Integer page, @RequestParam("pageSize") Integer pageSize) {
-        List<Company> companies = companyService.getCompanyByPage(page, pageSize);
-        return companies.stream()
-                .map(companyMapper::toResponse)
-                .collect(Collectors.toList());
+    public Page<CompanyResponse> getCompanyByPage(@RequestParam("page") Integer page, @RequestParam("pageSize") Integer pageSize) {
+        Page<Company> companies = this.companyService.getCompanyByPage(page, pageSize);
+        return companies.map(companyMapper::toResponse);
     }
 
     @GetMapping("/{id}/employees")
-    public List<EmployeeResponse> getCompanyEmployees(@PathVariable("id") String id){
+    public List<CompanyResponse> getCompanyEmployees(@PathVariable("id") String id) throws CompanyNotFoundException, EmployeeNotFoundException {
         List<Employee> employees = companyService.getCompanyEmployee(id);
-        return employees.stream()
-                .map(employeeMapper::toResponse)
-                .collect(Collectors.toList());
+        return employees.stream().map(employeeMapper::toResponse).collect(Collectors.toList());
     }
 }
