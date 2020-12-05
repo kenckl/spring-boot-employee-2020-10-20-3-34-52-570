@@ -48,6 +48,10 @@ public class Company {
         return companyId;
     }
 
+    public void setCompanyId(String companyId){
+        this.companyId = companyId;
+    }
+
     public Integer getTotalEmployee() {
         return totalEmployee;
     }

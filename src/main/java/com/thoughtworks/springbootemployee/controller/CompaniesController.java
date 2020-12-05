@@ -52,7 +52,7 @@ public class CompaniesController {
     }
 
     @PutMapping("/{companyId}")
-    public CompanyResponse updateCompanyByCompanyId(@PathVariable String companyId, @RequestBody Company companyUpdate) {
+    public CompanyResponse updateCompanyByCompanyId(@PathVariable String companyId, @RequestBody CompanyRequest companyUpdate) throws CompanyNotFoundException {
         Company company = companyMapper.toEntity(companyUpdate);
         Company updateCompany = companyService.updateCompanyById(companyId, company);
         return companyMapper.toResponse(updateCompany);
