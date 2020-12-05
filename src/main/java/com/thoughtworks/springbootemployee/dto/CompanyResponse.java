@@ -9,7 +9,6 @@ public class CompanyResponse {
     private String companyName;
     private List<Employee> employees;
 
-
     public CompanyResponse(String companyId, String companyName, List<Employee> employees){
         this.companyId = companyId;
         this.companyName = companyName;

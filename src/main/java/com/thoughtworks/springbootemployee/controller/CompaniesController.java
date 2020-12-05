@@ -5,6 +5,7 @@ import com.thoughtworks.springbootemployee.Model.Employee;
 import com.thoughtworks.springbootemployee.Service.CompanyService;
 import com.thoughtworks.springbootemployee.dto.CompanyRequest;
 import com.thoughtworks.springbootemployee.dto.CompanyResponse;
+import com.thoughtworks.springbootemployee.dto.EmployeeResponse;
 import com.thoughtworks.springbootemployee.exception.CompanyNotFoundException;
 import com.thoughtworks.springbootemployee.exception.EmployeeNotFoundException;
 import com.thoughtworks.springbootemployee.mapper.CompanyMapper;
@@ -70,7 +71,7 @@ public class CompaniesController {
     }
 
     @GetMapping("/{id}/employees")
-    public List<CompanyResponse> getCompanyEmployees(@PathVariable("id") String id) throws CompanyNotFoundException, EmployeeNotFoundException {
+    public List<EmployeeResponse> getCompanyEmployees(@PathVariable("id") String id) throws CompanyNotFoundException, EmployeeNotFoundException {
         List<Employee> employees = companyService.getCompanyEmployee(id);
         return employees.stream().map(employeeMapper::toResponse).collect(Collectors.toList());
     }

@@ -17,11 +17,10 @@ public class EmployeeResponse {
 
     public EmployeeResponse(){}
 
-    //add mapper and getter
-
     public String getId(){
         return id;
     }
+
     public String getName() {
         return name;
     }

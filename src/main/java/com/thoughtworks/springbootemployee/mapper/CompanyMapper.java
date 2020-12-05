@@ -4,7 +4,9 @@ import com.thoughtworks.springbootemployee.Model.Company;
 import com.thoughtworks.springbootemployee.dto.CompanyRequest;
 import com.thoughtworks.springbootemployee.dto.CompanyResponse;
 import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Component;
 
+@Component
 public class CompanyMapper {
     public Company toEntity(CompanyRequest companyRequest){
         Company company = new Company();
