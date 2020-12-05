@@ -20,12 +20,12 @@ import java.util.stream.Collectors;
 @RequestMapping("/companies")
 public class CompaniesController {
 
-    @Autowired
+    //@Autowired
     private CompanyService companyService;
     private final CompanyMapper companyMapper;
     private final EmployeeMapper employeeMapper;
 
-    public CompanyController(CompanyService companyService, CompanyMapper companyMapper, EmployeeMapper employeeMapper){
+    public CompaniesController(CompanyService companyService, CompanyMapper companyMapper, EmployeeMapper employeeMapper){
         this.companyService = companyService;
         this.companyMapper = companyMapper;
         this.employeeMapper = employeeMapper;
@@ -52,8 +52,10 @@ public class CompaniesController {
     }
 
     @PutMapping("/{companyId}")
-    public Company updateCompanyByCompanyId(@PathVariable String companyId, @RequestBody Company companyUpdate) {
-        return companyService.updateCompanyById(companyId, companyUpdate);
+    public CompanyResponse updateCompanyByCompanyId(@PathVariable String companyId, @RequestBody Company companyUpdate) {
+        Company company = companyMapper.toEntity(companyUpdate);
+        Company updateCompany = companyService.updateCompanyById(companyId, company);
+        return companyMapper.toResponse(updateCompany);
     }
 
     @DeleteMapping("/{companyId}")
