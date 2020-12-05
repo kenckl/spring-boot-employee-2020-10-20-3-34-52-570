@@ -10,6 +10,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -119,24 +122,15 @@ public class EmployeeServiceTest {
         //given
         List<Employee> employees = new ArrayList<>();
         Employee employee1 = new Employee("1", "Ken1", 21, "male", 10000, "1");
-        Employee employee2 = new Employee("2", "Ken2", 21, "male", 10000, "1");
-        Employee employee3 = new Employee("3", "Ken3", 21, "male", 10000, "1");
-        Employee employee4 = new Employee("4", "Ken4", 21, "male", 10000, "1");
         employees.add(employee1);
-        employees.add(employee2);
-        employees.add(employee3);
-        employees.add(employee4);
-        when(repository1.findAll()).thenReturn(employees);
+        Page<Employee> expected = new PageImpl<>(employees);
+        when(repository1.findAll((Pageable)any())).thenReturn(expected);
 
         //when
-        List<Employee> actual = employeeService.getEmployeeByPage(0,3);
+        Page<Employee> actual = employeeService.getEmployeeByPage(2,2);
 
         //then
-        assertEquals(3, actual.size());
-        assertEquals("1", actual.get(0).getId());
-        assertEquals("2", actual.get(1).getId());
-        assertEquals("3", actual.get(2).getId());
-
+        assertEquals(expected, actual);
     }
 
 }

@@ -5,12 +5,17 @@ import com.thoughtworks.springbootemployee.Model.Employee;
 import com.thoughtworks.springbootemployee.Repository.CompanyRepository1;
 import com.thoughtworks.springbootemployee.Repository.EmployeeRepository1;
 import com.thoughtworks.springbootemployee.Service.CompanyService;
+import com.thoughtworks.springbootemployee.exception.CompanyNotFoundException;
+import com.thoughtworks.springbootemployee.exception.EmployeeNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
 import java.util.*;
 import java.util.List;
@@ -46,16 +51,16 @@ public class CompanyServiceTest {
     }
 
     @Test
-    void should_return_company_when_get_by_id_given_in_database(){
+    void should_return_company_when_get_by_id_given_in_database() throws CompanyNotFoundException {
         //given
-        Company expected = Optional.of(new Company("1", "ABC Company"));
+        Optional<Company> expected = Optional.of(new Company( "ABC Company"));
         when(companyRepository1.findById("1")).thenReturn(expected);
 
         //when
-        Optional<Company> actual = companyService.findCompanyById("1");
+        Company actual = companyService.findCompanyById("1");
 
         //then
-        assertEquals(expected, actual);
+        assertEquals(expected.get(), actual);
     }
 
     @Test
@@ -73,7 +78,7 @@ public class CompanyServiceTest {
     }
 
     @Test
-    void should_return_update_company_when_update_by_id_given_in_database(){
+    void should_return_update_company_when_update_by_id_given_in_database() throws CompanyNotFoundException {
         //given
         Company expected = new Company("1", "ABC Company");
         when(companyRepository1.existsById("1")).thenReturn(true);
@@ -103,37 +108,28 @@ public class CompanyServiceTest {
     @Test
     void should_get_limited_company_when_get_employee_wth_page_size_given_in_database(){
         //given
-        ArrayList<Company> companies = new ArrayList<>();
-        Company company1 = new Company("1", "AAA Company");
-        Company company2 = new Company("2", "BBB Company");
-        Company company3 = new Company("3", "CCC Company");
-        Company company4 = new Company("4", "DDD Company");
-        companies.add(company1);
-        companies.add(company2);
-        companies.add(company3);
-        companies.add(company4);
-        when(companyRepository1.findAll()).thenReturn(companies);
+        List <Company> companies = new ArrayList<>();
+        companies.add(new Company("ABC Company"));
+        Page<Company> expected = new PageImpl<>(companies);
+
+        when(companyRepository1.findAll((Pageable)any())).thenReturn(expected);
 
         //when
-        List<Company> actual = companyService.getCompanyByPage(0,3);
+        Page<Company> actualEmployees = companyService.getCompanyByPage(2, 2);
 
         //then
-        assertEquals(3, actual.size());
-        assertEquals("1", actual.get(0).getCompanyId());
-        assertEquals("2", actual.get(1).getCompanyId());
-        assertEquals("3", actual.get(2).getCompanyId());
+        assertEquals(expected, actualEmployees);
     }
 
 
     @Test
-    void should_get_company_employees_when_get_by_company_id_given_company_id() {
+    void should_get_company_employees_when_get_by_company_id_given_company_id() throws CompanyNotFoundException, EmployeeNotFoundException {
         //given
-        // final variable to replace company id
         ArrayList <Employee> abcCompanyEmployees = new ArrayList<>();
-        Employee employee1 = new Employee("1", "ken1", 21, "male", 10000, "99");
-        Employee employee2 = new Employee("2", "ken2", 21, "male", 10000, "99");
-        Employee employee3 = new Employee("3", "ken3", 21, "male", 10000, "99");
-        Employee employee4 = new Employee("4", "ken4", 21, "male", 10000, "99");
+        Employee employee1 = new Employee("1", "ken1", 21, "male", 10000, "1");
+        Employee employee2 = new Employee("2", "ken2", 21, "male", 10000, "1");
+        Employee employee3 = new Employee("3", "ken3", 21, "male", 10000, "1");
+        Employee employee4 = new Employee("4", "ken4", 21, "male", 10000, "1");
         abcCompanyEmployees.add(employee1);
         abcCompanyEmployees.add(employee2);
         abcCompanyEmployees.add(employee3);
@@ -141,7 +137,7 @@ public class CompanyServiceTest {
         when(employeeRepository1.findByCompanyId(anyString())).thenReturn(abcCompanyEmployees);
 
         //when
-        List<Employee> actualList = companyService. getCompanyEmployee("99");
+        List<Employee> actualList = companyService.getCompanyEmployee("1");
 
         //then
         assertEquals(abcCompanyEmployees, actualList);
