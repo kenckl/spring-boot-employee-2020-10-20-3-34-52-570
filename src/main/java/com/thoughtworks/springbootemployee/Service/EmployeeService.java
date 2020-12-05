@@ -4,12 +4,12 @@ import com.thoughtworks.springbootemployee.Model.Employee;
 import com.thoughtworks.springbootemployee.Repository.EmployeeRepository1;
 import com.thoughtworks.springbootemployee.exception.EmployeeNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class EmployeeService {
@@ -46,14 +46,8 @@ public class EmployeeService {
         return employeeRepository1.findByGender(gender);
     }
 
-    public List<Employee> getEmployeeByPage(Integer page, Integer pageSize) {
-        return employeeRepository1.findAll().stream()
-                .skip(page * pageSize)
-                .limit(pageSize)
-                .collect(Collectors.toList());
-    }
-
-    public List<Employee> getEmployeeById(String id){
-        return employeeRepository1.findByCompanyId(id);
+    public Page<Employee> getEmployeeByPage(Integer page, Integer pageSize) {
+        Pageable pageable = PageRequest.of(page-1, pageSize);
+        return employeeRepository1.findAll(pageable);
     }
 }

@@ -10,6 +10,7 @@ import com.thoughtworks.springbootemployee.exception.CompanyNotFoundException;
 import com.thoughtworks.springbootemployee.exception.EmployeeNotFoundException;
 import com.thoughtworks.springbootemployee.mapper.CompanyMapper;
 import com.thoughtworks.springbootemployee.mapper.EmployeeMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +22,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/companies")
 public class CompaniesController {
 
-    //@Autowired
+    @Autowired
     private CompanyService companyService;
     private final CompanyMapper companyMapper;
     private final EmployeeMapper employeeMapper;
