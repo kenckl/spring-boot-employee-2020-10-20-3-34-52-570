@@ -64,8 +64,11 @@ public class CompaniesController {
     }
 
     @GetMapping(params = {"page", "pageSize"})
-    public List<Company> getCompanyByPage(@RequestParam("page") Integer page, @RequestParam("pageSize") Integer pageSize) {
-        return companyService.getCompanyByPage(page, pageSize);
+    public List<CompanyResponse> getCompanyByPage(@RequestParam("page") Integer page, @RequestParam("pageSize") Integer pageSize) {
+        List<Company> companies = companyService.getCompanyByPage(page, pageSize);
+        return companies.stream()
+                .map(companyMapper::toResponse)
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/{id}/employees")
