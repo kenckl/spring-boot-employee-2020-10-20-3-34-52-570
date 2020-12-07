@@ -101,7 +101,7 @@ public class CompanyIntegratonTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(companyAsJson))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.",hasSize(1)))
+                .andExpect(jsonPath("$.employees",hasSize(1)))
                 .andExpect(jsonPath("$.companyName").value("ABC Company"));
 
         List<Company> companies = companyRepository1.findAll();
@@ -185,18 +185,6 @@ public class CompanyIntegratonTest {
                 .andExpect(jsonPath("$[0].companyName").value("ABC Company"))
                 .andExpect(jsonPath("$[1].companyName").value("XYZ Company"))
                 .andExpect(jsonPath("$[2].companyName").value("QQQ Company"));
-    }
-
-    @Test
-    public void should_return_company_not_found_exception_when_get_by_id_given_invalid_companyID() {
-        //given
-        EmployeeRepository1 employeeRepository1 = Mockito.mock(EmployeeRepository1.class);
-        CompanyRepository1 companyRepository1 = Mockito.mock(CompanyRepository1.class);
-        CompanyService companyService = new CompanyService(companyRepository1, employeeRepository1);
-        Mockito.when(companyRepository1.findById(any())).thenReturn(Optional.empty());
-        //when
-        //then
-        assertThrows(CompanyNotFoundException.class, () -> companyService.findCompanyById("1"));
     }
 
     @Test

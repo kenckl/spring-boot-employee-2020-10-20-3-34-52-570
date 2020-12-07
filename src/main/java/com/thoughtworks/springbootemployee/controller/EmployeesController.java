@@ -3,14 +3,12 @@ package com.thoughtworks.springbootemployee.controller;
 import com.thoughtworks.springbootemployee.Model.Employee;
 import com.thoughtworks.springbootemployee.Service.EmployeeService;
 import com.thoughtworks.springbootemployee.dto.EmployeeRequest;
-import com.thoughtworks.springbootemployee.dto.CompanyResponse;
 import com.thoughtworks.springbootemployee.dto.EmployeeResponse;
 import com.thoughtworks.springbootemployee.exception.EmployeeNotFoundException;
 import com.thoughtworks.springbootemployee.mapper.EmployeeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,7 +19,6 @@ public class EmployeesController {
     @Autowired
     private EmployeeService employeeService;
     private final EmployeeMapper employeeMapper;
-    private final List<Employee> employees = new ArrayList<>();
 
     public EmployeesController(EmployeeService employeeService, EmployeeMapper employeeMapper){
         this.employeeService = employeeService;

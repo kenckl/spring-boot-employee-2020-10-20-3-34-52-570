@@ -12,7 +12,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 import java.util.List;
@@ -121,6 +120,7 @@ public class EmployeeIntegrationTest {
 
     @Test
     void should_return_employee_when_get_employee_given_employee_Id() throws Exception {
+
         //given
         Employee employee = employeeRepository1.save(new Employee("1", "Ken", 18, "male", 10000,  "1"));
 
@@ -133,7 +133,7 @@ public class EmployeeIntegrationTest {
                 .andExpect(jsonPath("$.age").value(18))
                 .andExpect(jsonPath("$.gender").value("male"))
                 .andExpect(jsonPath("$.salary").value(10000))
-                .andExpect(jsonPath("$.companyId").value("1"));;
+                .andExpect(jsonPath("$.companyId").value("1"));
     }
 
     @Test

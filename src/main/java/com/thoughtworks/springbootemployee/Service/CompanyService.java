@@ -39,8 +39,6 @@ public class CompanyService {
                 .orElseThrow(() -> new CompanyNotFoundException());
     }
 
-    // handle exception if null
-    // check if company.get(id) == id
     public Company updateCompanyById(String id, Company newCompany) throws CompanyNotFoundException {
         if (companyRepository1.existsById(id)){
             newCompany.setCompanyId(id);
@@ -50,13 +48,15 @@ public class CompanyService {
     }
 
 
-    public void deleteCompanyById(String id) {
+    public void deleteCompanyById(String id) throws CompanyNotFoundException {
         if (companyRepository1.existsById(id)) {
             companyRepository1.deleteById(id);
-        }
+        } else
+            throw new CompanyNotFoundException();
     }
 
     // findAll(pagable) in repository
+    // check if page > 0, if not then throw exception (invalid page input)
     public Page<Company> getCompanyByPage(Integer page, Integer pageSize) {
         Pageable pageable = PageRequest.of(page - 1, pageSize);
         return companyRepository1.findAll(pageable);

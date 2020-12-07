@@ -92,7 +92,7 @@ public class CompanyServiceTest {
     }
 
     @Test
-    void should_delete_company_when_delete_by_id_given_in_database(){
+    void should_delete_company_when_delete_by_id_given_in_database() throws CompanyNotFoundException {
 
         // use mockito test
         //given

@@ -6,11 +6,9 @@ import java.util.List;
 
 public class CompanyRequest {
     private String companyName;
-    private List<Employee> employees;
 
     public CompanyRequest(String companyName, List<Employee> employees){
         this.companyName = companyName;
-        this.employees = employees;
     }
 
     public CompanyRequest(){
@@ -24,7 +22,4 @@ public class CompanyRequest {
         this.companyName = companyName;
     }
 
-    public List<Employee> getEmployees(){
-        return employees;
-    }
 }
